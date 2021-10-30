@@ -349,11 +349,13 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void exBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exBtnActionPerformed
         //export
+         JOptionPane.showMessageDialog(null,"Funtion not available.","Alert",JOptionPane.WARNING_MESSAGE);
 //        popFrame.exportF();
     }//GEN-LAST:event_exBtnActionPerformed
 
     private void imBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imBtnActionPerformed
         //import
+         JOptionPane.showMessageDialog(null,"Funtion not available.","Alert",JOptionPane.WARNING_MESSAGE);
 //        popFrame.importF();
     }//GEN-LAST:event_imBtnActionPerformed
 
