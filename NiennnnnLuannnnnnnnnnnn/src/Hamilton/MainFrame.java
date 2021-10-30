@@ -8,8 +8,8 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         //im ex icon
-        Icon im = new ImageIcon("C:\\Users\\nguye\\Documents\\NetBeansProjects\\NiennnnnLuannnnnnnnnnnn\\src\\im.png");
-        Icon ex = new ImageIcon("C:\\Users\\nguye\\Documents\\NetBeansProjects\\NiennnnnLuannnnnnnnnnnn\\src\\ex.png");
+        Icon im = new ImageIcon("src\\IMG\\im.png");
+        Icon ex = new ImageIcon("src\\IMG\\ex.png");
         imBtn.setIcon(im);
         exBtn.setIcon(ex);
         
