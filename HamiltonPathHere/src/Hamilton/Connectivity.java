@@ -1,7 +1,7 @@
-// Java program to print connected components in
-// an undirected graph
+package Hamilton;
+
 import java.util.ArrayList;
-class Graph
+class Connectivity
 {
     // A user define class to represent a graph.
     // A graph is an array of adjacency lists.
@@ -11,7 +11,7 @@ class Graph
     ArrayList<ArrayList<Integer> > adjListArray;
  
     // constructor
-    Graph(int V)
+    Connectivity(int V)
     {
         this.V = V;
         // define the size of array as
@@ -37,11 +37,15 @@ class Graph
         adjListArray.get(dest).add(src);
     }
  
+    public static String connectString = "";
+    
     void DFSUtil(int v, boolean[] visited)
     {
         // Mark the current node as visited and print it
         visited[v] = true;
         System.out.print(v + " ");
+        connectString += v + " ";
+        
         // Recur for all the vertices
         // adjacent to this vertex
         for (int x : adjListArray.get(v)) {
@@ -58,16 +62,20 @@ class Graph
                 // print all reachable vertices
                 // from v
                 DFSUtil(v, visited);
+                connectString += "\n";
                 System.out.println();
             }
         }
+        System.out.println(connectString);
     }
+    
+
  
     // Driver code
     public static void main(String[] args)
     {
         // Create a graph given in the above diagram
-        Graph g = new Graph(7); // 5 vertices numbered from 0 to 4
+        Connectivity g = new Connectivity(7); // 5 vertices numbered from 0 to 4
  
         g.addEdge(1, 2);
         g.addEdge(2, 3);

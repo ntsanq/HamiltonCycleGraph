@@ -359,6 +359,8 @@ public class MainFrame extends javax.swing.JFrame {
 //        popFrame.importF();
     }//GEN-LAST:event_imBtnActionPerformed
 
+     public static String connectivityResult = "x";
+    
     private void checkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBtnActionPerformed
 
         popFrame.findGraph();
@@ -367,6 +369,12 @@ public class MainFrame extends javax.swing.JFrame {
         
         String e =Integer.toString( popFrame.showEdge());
         edgeNumField.setText("There are "+e+" edges");
+        
+//       check connectiviry
+        popFrame.checkConnectivity();
+        cntvtyField.setText(connectivityResult);
+        
+        
     }//GEN-LAST:event_checkBtnActionPerformed
 
     private void questionLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_questionLblMouseClicked

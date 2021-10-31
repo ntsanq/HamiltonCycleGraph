@@ -13,6 +13,8 @@ public class Graph_Panel extends JPanel {
 	int circleRadius = 20;
 	
 	ArrayList<ArrayList<Boolean>> adjacency = new ArrayList<ArrayList<Boolean>>();
+        
+        
 	public Graph_Panel() {
 		super();
 	}
@@ -47,6 +49,7 @@ public class Graph_Panel extends JPanel {
         }
 
         public static int[][] graphSolve;
+        
 	public void printAdjacency() {            
                 graphSolve = new int[adjacency.size()][adjacency.size()];
 		for (int i = 0; i < adjacency.size(); i++) {
@@ -58,6 +61,8 @@ public class Graph_Panel extends JPanel {
                                 graphSolve[i][j]=temp;
 			}
 		} 
+                
+                
                 
 	}
         
@@ -128,9 +133,6 @@ public class Graph_Panel extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
                 
-		//Ve cac thu
-                
-                //ve line
 		for (int i = 0; i < edgeList.size(); i++) {
 			g.setColor(Color.BLACK);
 			g.drawLine(edgeList.get(i).getFirst().getX(), edgeList.get(i).getFirst().getY(), edgeList.get(i).getSecond().getX(), edgeList.get(i).getSecond().getY());
