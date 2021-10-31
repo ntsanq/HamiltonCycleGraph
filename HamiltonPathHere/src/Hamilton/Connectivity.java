@@ -43,8 +43,10 @@ class Connectivity
     {
         // Mark the current node as visited and print it
         visited[v] = true;
-        System.out.print(v + " ");
-        connectString += v + " ";
+        if(v!=0){
+            System.out.print(v + " ");
+            connectString += v + " ";
+        }
         
         // Recur for all the vertices
         // adjacent to this vertex

@@ -241,6 +241,11 @@ public class MainFrame extends javax.swing.JFrame {
         bigTiltle.setFont(new java.awt.Font("UTM Rockwell", 1, 26)); // NOI18N
         bigTiltle.setText("Hamilton Path");
 
+        imBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imBtnMouseClicked(evt);
+            }
+        });
         imBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 imBtnActionPerformed(evt);
@@ -348,14 +353,18 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_openBtnActionPerformed
 
     private void exBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exBtnActionPerformed
+         popFrame.exportGraph();
+
         //export
-         JOptionPane.showMessageDialog(null,"Funtion not available.","Alert",JOptionPane.WARNING_MESSAGE);
+//         JOptionPane.showMessageDialog(null,"Funtion not available.","Alert",JOptionPane.WARNING_MESSAGE);
 //        popFrame.exportF();
     }//GEN-LAST:event_exBtnActionPerformed
 
     private void imBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imBtnActionPerformed
         //import
-         JOptionPane.showMessageDialog(null,"Funtion not available.","Alert",JOptionPane.WARNING_MESSAGE);
+        popFrame.importGraph();
+        
+//         JOptionPane.showMessageDialog(null,"Funtion not available.","Alert",JOptionPane.WARNING_MESSAGE);
 //        popFrame.importF();
     }//GEN-LAST:event_imBtnActionPerformed
 
@@ -388,6 +397,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void ownerLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ownerLblMouseClicked
         JOptionPane.showMessageDialog(null, "Nguyen Thanh Sang\nB1805911\nCan Tho University", "Owner", JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_ownerLblMouseClicked
+
+    private void imBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imBtnMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_imBtnMouseClicked
 
     public static int state= -1;
     

@@ -403,6 +403,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="imBtn">
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="imBtnMouseClicked"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="imBtnActionPerformed"/>
       </Events>
     </Component>

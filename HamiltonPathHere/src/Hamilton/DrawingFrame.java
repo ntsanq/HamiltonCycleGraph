@@ -53,6 +53,16 @@ public class DrawingFrame implements ActionListener, MouseListener {
         frame.repaint();
         count = 0;
     }
+    
+    public void exportGraph(){
+        panel.exportGraphPanel();
+        frame.repaint();
+    }
+    
+    public void importGraph(){
+        panel.importGraphPanel();
+        frame.repaint();
+    }
 
 //        public void importF()throws FileNotFoundException {
 //            File f = new File("ex.txt");
@@ -127,7 +137,6 @@ public class DrawingFrame implements ActionListener, MouseListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
         if (state == NODE_CREATE) {
             count++;
             panel.addNode(e.getX(), e.getY(), String.valueOf(count));

@@ -1,7 +1,10 @@
 package Hamilton;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -32,10 +35,38 @@ public class Graph_Panel extends JPanel {
         
 
         public void resetNode(){
-            nodeList.clear();
-            edgeList.clear();
+            nodeList = new ArrayList<Node>();
+            edgeList = new ArrayList<Edge>();
+            adjacency = new ArrayList<ArrayList<Boolean>>();
+        }
+        
+        public String expNode;
+        public  String expEdge;
+        public String expAdj;
+        
+        public void exportGraphPanel(){
+            Gson json = new  Gson();
+            expNode = json.toJson(nodeList); // xuat ra txt
+            expEdge = json.toJson(edgeList); // xuat ra txt
+            expAdj = json.toJson(adjacency); // xuat ra txt
+            resetNode();
+            
         }
      
+        
+        public void importGraphPanel(){
+            Gson json = new  Gson();
+            
+            
+            
+            System.out.println(expNode+"\n"+expEdge+"\n"+expAdj+"n");
+            Type NodeType = new TypeToken<ArrayList<Node>>(){}.getType();
+            Type EdgeType = new TypeToken<ArrayList<Edge>>(){}.getType();
+            Type AdjType = new TypeToken<ArrayList<ArrayList<Boolean>>>(){}.getType();
+            nodeList = new  ArrayList<Node>(json.fromJson(expNode,NodeType)); 
+            edgeList = new  ArrayList<Edge>(json.fromJson(expEdge,EdgeType)); 
+            adjacency = new   ArrayList<ArrayList<Boolean>>(json.fromJson(expAdj,AdjType)); 
+        }
    
         public int showEdge(){
             return edgeList.size();
