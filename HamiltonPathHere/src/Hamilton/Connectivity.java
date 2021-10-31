@@ -57,18 +57,21 @@ class Connectivity
     }
     void connectedComponents()
     {
+        connectString = "";
         // Mark all the vertices as not visited
         boolean[] visited = new boolean[V];
-        for (int v = 0; v < V; ++v) {
+        for (int v = 1; v < V; ++v) {
             if (!visited[v]) {
                 // print all reachable vertices
                 // from v
-                DFSUtil(v, visited);
-                connectString += "\n";
-                System.out.println();
+                        
+                        DFSUtil(v, visited);
+                        
+                        connectString += ". "; 
+              
             }
         }
-        System.out.println(connectString);
+//        System.out.println(connectString);
     }
     
 

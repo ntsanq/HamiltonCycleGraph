@@ -97,7 +97,8 @@ public class DrawingFrame implements ActionListener, MouseListener {
     
     
     public static void checkConnectivity() {
-        Connectivity graphConnected = new Connectivity(graphSolve.length);
+        Connectivity graphConnected = new Connectivity(graphSolve.length+1);
+        
         int[][] temp = new int[graphSolve.length][graphSolve.length];
         for (int i = 0; i < graphSolve.length; i++) {
             for (int j = 0; j < graphSolve.length; j++) {

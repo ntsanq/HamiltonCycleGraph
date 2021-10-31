@@ -3,8 +3,10 @@ package Hamilton;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import static Hamilton.Connectivity.connectString;
 
 public class MainFrame extends javax.swing.JFrame {
+
     public MainFrame() {
         initComponents();
         //im ex icon
@@ -12,7 +14,7 @@ public class MainFrame extends javax.swing.JFrame {
         Icon ex = new ImageIcon("src\\IMG\\ex.png");
         imBtn.setIcon(im);
         exBtn.setIcon(ex);
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -123,7 +125,11 @@ public class MainFrame extends javax.swing.JFrame {
         cncLabel.setFont(new java.awt.Font("UTM Rockwell", 1, 12)); // NOI18N
         cncLabel.setText("Connectivity check");
 
-        cntvtyField.setEditable(false);
+        cntvtyField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cntvtyFieldActionPerformed(evt);
+            }
+        });
 
         checkBtn.setText("Click to check");
         checkBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -330,8 +336,8 @@ public class MainFrame extends javax.swing.JFrame {
     private void findPATHBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findPATHBtnActionPerformed
         final_path = "";
         popFrame.findGraph();
-        pathField.setText("The path is: "+final_path);
- 
+        pathField.setText("The path is: " + final_path);
+
     }//GEN-LAST:event_findPATHBtnActionPerformed
 
     private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
@@ -348,12 +354,12 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void openBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openBtnActionPerformed
         popFrame = new DrawingFrame();
-        
-    
+
+
     }//GEN-LAST:event_openBtnActionPerformed
 
     private void exBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exBtnActionPerformed
-         popFrame.exportGraph();
+        popFrame.exportGraph();
 
         //export
 //         JOptionPane.showMessageDialog(null,"Funtion not available.","Alert",JOptionPane.WARNING_MESSAGE);
@@ -363,33 +369,33 @@ public class MainFrame extends javax.swing.JFrame {
     private void imBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imBtnActionPerformed
         //import
         popFrame.importGraph();
-        
+
 //         JOptionPane.showMessageDialog(null,"Funtion not available.","Alert",JOptionPane.WARNING_MESSAGE);
 //        popFrame.importF();
     }//GEN-LAST:event_imBtnActionPerformed
 
-     public static String connectivityResult = "x";
-    
+    public static String connectivityResult;
+
     private void checkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBtnActionPerformed
 
         popFrame.findGraph();
-        String v =Integer.toString( popFrame.showNode());
-        vNumField.setText("There are "+v+" vertexes");
-        
-        String e =Integer.toString( popFrame.showEdge());
-        edgeNumField.setText("There are "+e+" edges");
-        
+        String v = Integer.toString(popFrame.showNode());
+        vNumField.setText("There are " + v + " vertexes");
+
+        String e = Integer.toString(popFrame.showEdge());
+        edgeNumField.setText("There are " + e + " edges");
+
 //       check connectiviry
         popFrame.checkConnectivity();
-        cntvtyField.setText(connectivityResult);
-        
-        
+        cntvtyField.setText("Connected components: " + connectString);
+
+
     }//GEN-LAST:event_checkBtnActionPerformed
 
     private void questionLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_questionLblMouseClicked
-        JOptionPane.showMessageDialog(null, "1.Open Drawing Panel to begin to draw.\n\n"+
-            "2.Then choose funtion in your Control mode and start to click in the panel.\n\n"
-            + "3.There are buttons below to check Connectivity and Hamilton Result.\n\n"
+        JOptionPane.showMessageDialog(null, "1.Open Drawing Panel to begin to draw.\n\n"
+                + "2.Then choose funtion in your Control mode and start to click in the panel.\n\n"
+                + "3.There are buttons below to check Connectivity and Hamilton Result.\n\n"
                 + "HOPE YOU ENJOY!\n\n"
                 + "Sang.", "How to use?", JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_questionLblMouseClicked
@@ -402,18 +408,20 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_imBtnMouseClicked
 
-    public static int state= -1;
-    
+    private void cntvtyFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cntvtyFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cntvtyFieldActionPerformed
+
+    public static int state = -1;
+
     public static DrawingFrame popFrame;
-    
-        
+
     final int NODE_CREATE = 0;
     final int EDGE_FIRST = 1;
     final int EDGE_SECOND = 2;
-    public static String final_path ;
-    public static String VNumber ;
-    
- 
+    public static String final_path;
+    public static String VNumber;
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
