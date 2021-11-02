@@ -352,26 +352,17 @@ public class MainFrame extends javax.swing.JFrame {
         state = EDGE_FIRST;
     }//GEN-LAST:event_addEdBtnActionPerformed
 
-    private void openBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openBtnActionPerformed
-        popFrame = new DrawingFrame();
-
-
-    }//GEN-LAST:event_openBtnActionPerformed
-
     private void exBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exBtnActionPerformed
-        popFrame.exportGraph();
-
         //export
+        popFrame.exportGraph();
+        
 //         JOptionPane.showMessageDialog(null,"Funtion not available.","Alert",JOptionPane.WARNING_MESSAGE);
-//        popFrame.exportF();
+
     }//GEN-LAST:event_exBtnActionPerformed
 
     private void imBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imBtnActionPerformed
         //import
         popFrame.importGraph();
-
-//         JOptionPane.showMessageDialog(null,"Funtion not available.","Alert",JOptionPane.WARNING_MESSAGE);
-//        popFrame.importF();
     }//GEN-LAST:event_imBtnActionPerformed
 
     public static String connectivityResult;
@@ -412,6 +403,10 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cntvtyFieldActionPerformed
 
+    private void openBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openBtnActionPerformed
+        popFrame = new DrawingFrame();
+    }//GEN-LAST:event_openBtnActionPerformed
+
     public static int state = -1;
 
     public static DrawingFrame popFrame;
@@ -447,6 +442,7 @@ public class MainFrame extends javax.swing.JFrame {
                 MainFrame m = new MainFrame();
                 m.setVisible(true);
                 m.setTitle("NguyenThanhSang");
+//                popFrame = new DrawingFrame();
             }
         });
     }

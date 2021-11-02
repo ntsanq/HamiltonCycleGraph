@@ -15,18 +15,18 @@ public class DrawingFrame implements ActionListener, MouseListener {
 
     public static JFrame frame = new JFrame();
     Graph_Panel panel = new Graph_Panel();
-
     final int NODE_CREATE = 0;
     final int EDGE_FIRST = 1;
     final int EDGE_SECOND = 2;
 
     Node first = null;
-
     ArrayList<Node> hamilPath = new ArrayList<Node>();
 
     String hamilPathString = "";
 
     public DrawingFrame() {
+        
+        //custom drawning frame
         frame.setSize(796, 723);
         frame.setResizable(false);
         frame.setLocation(570, 0);
@@ -39,26 +39,29 @@ public class DrawingFrame implements ActionListener, MouseListener {
         panel.addMouseListener(this);
 
     }
-
+    
+    //layy gia tri canh
     public int showEdge() {
         return panel.showEdge();
     }
-
+    //lay gia tri dinh
     public int showNode() {
         return panel.showNode();
     }
-
+    
+    //reset tat ca cac dinh tren panel
     public void reset() {
         panel.resetNode();
         frame.repaint();
         count = 0;
     }
     
+    //ham export
     public void exportGraph(){
         panel.exportGraphPanel();
         frame.repaint();
     }
-    
+    //ham import
     public void importGraph(){
         panel.importGraphPanel();
         frame.repaint();
@@ -90,12 +93,10 @@ public class DrawingFrame implements ActionListener, MouseListener {
                 temp[i][j] = graphSolve[i][j];
             }
         }
-
         hc.findHamiltonianCycle(temp);
     }
 
-    
-    
+        
     public static void checkConnectivity() {
         Connectivity graphConnected = new Connectivity(graphSolve.length+1);
         

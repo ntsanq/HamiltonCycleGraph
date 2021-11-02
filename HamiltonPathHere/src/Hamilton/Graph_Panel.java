@@ -4,8 +4,20 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
@@ -40,32 +52,62 @@ public class Graph_Panel extends JPanel {
             adjacency = new ArrayList<ArrayList<Boolean>>();
         }
         
+        
         public String expNode;
         public  String expEdge;
         public String expAdj;
         
-        public void exportGraphPanel(){
+        public void exportGraphPanel()   {
             Gson json = new  Gson();
+                        
             expNode = json.toJson(nodeList); // xuat ra txt
             expEdge = json.toJson(edgeList); // xuat ra txt
             expAdj = json.toJson(adjacency); // xuat ra txt
+            
+            String content = (expNode+"\n"+expEdge+"\n"+expAdj+"\n");
+            
+            BufferedWriter wt;        
+            try {
+                wt = new BufferedWriter(new FileWriter("src\\files\\new3.txt"));
+                wt.write(content);
+            wt.close();
+            System.out.println(expNode+"\n"+expEdge+"\n"+expAdj+"\n");
+//            expNode = ""; // xuat ra txt
+//            expEdge = ""; // xuat ra txt
+//            expAdj = ""; //
             resetNode();
+            } catch (IOException ex) {
+                Logger.getLogger(Graph_Panel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             
         }
-     
         
+        String impNode;
+        String impEdge;
+        String impAdj;
         public void importGraphPanel(){
-            Gson json = new  Gson();
+           Gson json = new  Gson();
+           try {
+                File imf = new File("src\\files\\new2.txt");
+                Scanner myReader = new Scanner(imf);
+                     impNode = myReader.nextLine();
+                     impEdge = myReader.nextLine();
+                     impAdj = myReader.nextLine();
+                
+                myReader.close();
+          }catch (FileNotFoundException e) {
+           System.out.println("Can't read this file");
+           e.printStackTrace();
+          }
             
-            
-            
-            System.out.println(expNode+"\n"+expEdge+"\n"+expAdj+"n");
+            System.out.println(impNode+"\n"+impEdge+"\n"+impAdj+"\n");
             Type NodeType = new TypeToken<ArrayList<Node>>(){}.getType();
             Type EdgeType = new TypeToken<ArrayList<Edge>>(){}.getType();
             Type AdjType = new TypeToken<ArrayList<ArrayList<Boolean>>>(){}.getType();
-            nodeList = new  ArrayList<Node>(json.fromJson(expNode,NodeType)); 
-            edgeList = new  ArrayList<Edge>(json.fromJson(expEdge,EdgeType)); 
-            adjacency = new   ArrayList<ArrayList<Boolean>>(json.fromJson(expAdj,AdjType)); 
+            nodeList = new  ArrayList<Node>(json.fromJson(impNode,NodeType)); 
+            edgeList = new  ArrayList<Edge>(json.fromJson(impEdge,EdgeType)); 
+            adjacency = new   ArrayList<ArrayList<Boolean>>(json.fromJson(impAdj,AdjType)); 
         }
    
         public int showEdge(){
@@ -75,9 +117,6 @@ public class Graph_Panel extends JPanel {
             return nodeList.size();
         }
         
-        public void inCanh(){
-//            System.out.println("this is list of edges: " +egdeList );
-        }
 
         public static int[][] graphSolve;
         

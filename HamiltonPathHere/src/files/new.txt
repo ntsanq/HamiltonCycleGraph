@@ -1,0 +1,3 @@
+[{"x":286,"y":211,"label":"1","highlighted":false},{"x":303,"y":233,"label":"2","highlighted":false},{"x":299,"y":385,"label":"3","highlighted":false},{"x":142,"y":279,"label":"4","highlighted":false}]
+[]
+[[false,false,false,false],[false,false,false,false],[false,false,false,false],[false,false,false,false]]
