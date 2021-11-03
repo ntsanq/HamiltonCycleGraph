@@ -230,9 +230,9 @@
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="cntvtyField" alignment="0" pref="240" max="32767" attributes="0"/>
-                              <Component id="edgeNumField" alignment="0" max="32767" attributes="0"/>
+                              <Component id="edgeNumField" alignment="0" pref="240" max="32767" attributes="0"/>
                               <Component id="vNumField" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -259,17 +259,14 @@
                       <Component id="eNumLbl" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="edgeNumField" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="cntComponentLbl" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Component id="cntvtyField" pref="78" max="32767" attributes="0"/>
-                  </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="cntComponentLbl" min="-2" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="71" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="25" max="32767" attributes="0"/>
                   <Component id="checkBtn" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -282,11 +279,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Connectivity check"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="cntvtyField">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cntvtyFieldActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="checkBtn">
           <Properties>
@@ -321,6 +313,21 @@
             <Property name="text" type="java.lang.String" value="Connected components :"/>
           </Properties>
         </Component>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTextArea" name="cntvtyField">
+              <Properties>
+                <Property name="columns" type="int" value="20"/>
+                <Property name="rows" type="int" value="5"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="Result">

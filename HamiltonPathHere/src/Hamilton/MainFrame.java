@@ -29,13 +29,14 @@ public class MainFrame extends javax.swing.JFrame {
         controlLabel = new javax.swing.JLabel();
         connectivityCheck = new javax.swing.JPanel();
         cncLabel = new javax.swing.JLabel();
-        cntvtyField = new javax.swing.JTextField();
         checkBtn = new javax.swing.JButton();
         vNumLbl = new javax.swing.JLabel();
         eNumLbl = new javax.swing.JLabel();
         edgeNumField = new javax.swing.JTextField();
         vNumField = new javax.swing.JTextField();
         cntComponentLbl = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        cntvtyField = new javax.swing.JTextArea();
         Result = new javax.swing.JPanel();
         findPATHBtn = new javax.swing.JButton();
         pathField = new javax.swing.JTextField();
@@ -125,12 +126,6 @@ public class MainFrame extends javax.swing.JFrame {
         cncLabel.setFont(new java.awt.Font("UTM Rockwell", 1, 12)); // NOI18N
         cncLabel.setText("Connectivity check");
 
-        cntvtyField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cntvtyFieldActionPerformed(evt);
-            }
-        });
-
         checkBtn.setText("Click to check");
         checkBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,6 +142,10 @@ public class MainFrame extends javax.swing.JFrame {
         vNumField.setEditable(false);
 
         cntComponentLbl.setText("Connected components :");
+
+        cntvtyField.setColumns(20);
+        cntvtyField.setRows(5);
+        jScrollPane1.setViewportView(cntvtyField);
 
         javax.swing.GroupLayout connectivityCheckLayout = new javax.swing.GroupLayout(connectivityCheck);
         connectivityCheck.setLayout(connectivityCheckLayout);
@@ -170,9 +169,9 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addComponent(cntComponentLbl)
                                 .addGap(18, 18, 18)))
                         .addGroup(connectivityCheckLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cntvtyField, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-                            .addComponent(edgeNumField)
-                            .addComponent(vNumField)))
+                            .addComponent(edgeNumField, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                            .addComponent(vNumField)
+                            .addComponent(jScrollPane1)))
                     .addGroup(connectivityCheckLayout.createSequentialGroup()
                         .addGap(169, 169, 169)
                         .addComponent(checkBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -191,13 +190,11 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(connectivityCheckLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(eNumLbl)
                     .addComponent(edgeNumField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(connectivityCheckLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(connectivityCheckLayout.createSequentialGroup()
-                        .addComponent(cntComponentLbl)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(cntvtyField, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(connectivityCheckLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cntComponentLbl)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(checkBtn)
                 .addContainerGap())
         );
@@ -378,7 +375,7 @@ public class MainFrame extends javax.swing.JFrame {
 
 //       check connectiviry
         popFrame.checkConnectivity();
-        cntvtyField.setText("Connected components: " + connectString);
+        cntvtyField.setText(connectString);
 
 
     }//GEN-LAST:event_checkBtnActionPerformed
@@ -398,10 +395,6 @@ public class MainFrame extends javax.swing.JFrame {
     private void imBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imBtnMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_imBtnMouseClicked
-
-    private void cntvtyFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cntvtyFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cntvtyFieldActionPerformed
 
     private void openBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openBtnActionPerformed
         popFrame = new DrawingFrame();
@@ -455,7 +448,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton checkBtn;
     private javax.swing.JLabel cncLabel;
     private javax.swing.JLabel cntComponentLbl;
-    private javax.swing.JTextField cntvtyField;
+    private javax.swing.JTextArea cntvtyField;
     private javax.swing.JPanel connectivityCheck;
     private javax.swing.JLabel controlLabel;
     private javax.swing.JPanel controlMode;
@@ -464,6 +457,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton exBtn;
     private javax.swing.JButton findPATHBtn;
     private javax.swing.JButton imBtn;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton openBtn;
     private javax.swing.JLabel ownerLbl;
     private javax.swing.JTextField pathField;

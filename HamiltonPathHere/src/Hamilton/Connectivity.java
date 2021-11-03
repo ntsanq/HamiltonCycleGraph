@@ -64,30 +64,14 @@ class Connectivity
             if (!visited[v]) {
                 // print all reachable vertices
                 // from v
-                        
                         DFSUtil(v, visited);
                         
-                        connectString += ". "; 
+                        connectString =  connectString + ". "; 
               
             }
         }
-//        System.out.println(connectString);
+
     }
     
 
- 
-//    // Driver code
-//    public static void main(String[] args)
-//    {
-//        // Create a graph given in the above diagram
-//        Connectivity g = new Connectivity(7); // 5 vertices numbered from 0 to 4
-// 
-//        g.addEdge(1, 2);
-//        g.addEdge(2, 3);
-//        g.addEdge(4 ,5);
-//        
-//        
-//        System.out.println("Following are connected components");
-//        g.connectedComponents();
-//    }
 }

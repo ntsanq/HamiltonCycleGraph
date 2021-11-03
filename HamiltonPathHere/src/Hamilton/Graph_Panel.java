@@ -9,31 +9,28 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.lang.reflect.Type;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 
 import javax.swing.JPanel;
 
 public class Graph_Panel extends JPanel {
-	
 	ArrayList<Node> nodeList = new ArrayList<Node>();
 	ArrayList<Edge> edgeList = new ArrayList<Edge>();
-	int circleRadius = 20;
-	
 	ArrayList<ArrayList<Boolean>> adjacency = new ArrayList<ArrayList<Boolean>>();
+        int circleRadius =20;
         
         
 	public Graph_Panel() {
 		super();
 	}
 	
+        
+        
 	public ArrayList<String> getConnected(String label) {
 		ArrayList<String> toReturn = new ArrayList<String>();
 		int j = getIndex(label);
@@ -45,7 +42,7 @@ public class Graph_Panel extends JPanel {
 		return toReturn;
 	}
         
-
+        //********HAM***************************************************************************************//
         public void resetNode(){
             nodeList = new ArrayList<Node>();
             edgeList = new ArrayList<Edge>();
@@ -65,17 +62,23 @@ public class Graph_Panel extends JPanel {
             expAdj = json.toJson(adjacency); // xuat ra txt
             
             String content = (expNode+"\n"+expEdge+"\n"+expAdj+"\n");
-            
-            BufferedWriter wt;        
+            BufferedWriter wt;   
+            //*******EXPORT FILE*************//
             try {
-                wt = new BufferedWriter(new FileWriter("src\\files\\new3.txt"));
-                wt.write(content);
-            wt.close();
-            System.out.println(expNode+"\n"+expEdge+"\n"+expAdj+"\n");
-//            expNode = ""; // xuat ra txt
-//            expEdge = ""; // xuat ra txt
-//            expAdj = ""; //
-            resetNode();
+                
+                 JFileChooser filechooser =new JFileChooser();
+                int response =filechooser.showSaveDialog(null);//chon file save
+                if(response == JFileChooser.APPROVE_OPTION){
+                    File exPath =new File(filechooser.getSelectedFile().getAbsolutePath());
+                    wt = new BufferedWriter(new FileWriter(exPath));
+                    wt.write(content);
+                    wt.close();
+                    System.out.println(expNode+"\n"+expEdge+"\n"+expAdj+"\n");
+                    resetNode();
+                }else {
+                 throw new NullPointerException("demo");
+                }
+            
             } catch (IOException ex) {
                 Logger.getLogger(Graph_Panel.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -88,14 +91,23 @@ public class Graph_Panel extends JPanel {
         String impAdj;
         public void importGraphPanel(){
            Gson json = new  Gson();
+           
+           //*******DOC FILE*************//
            try {
-                File imf = new File("src\\files\\new2.txt");
-                Scanner myReader = new Scanner(imf);
-                     impNode = myReader.nextLine();
-                     impEdge = myReader.nextLine();
-                     impAdj = myReader.nextLine();
+                JFileChooser filechooser =new JFileChooser();
+                int response =filechooser.showOpenDialog(null);//chon file
+                if(response == JFileChooser.APPROVE_OPTION){
+                    File imPath =new File(filechooser.getSelectedFile().getAbsolutePath());                    
+                    Scanner sc = new Scanner(imPath);
+                     impNode = sc.nextLine();
+                     impEdge = sc.nextLine();
+                     impAdj = sc.nextLine();
+                     sc.close();
+                }else {
+                 throw new NullPointerException("demo");
+                }
                 
-                myReader.close();
+                
           }catch (FileNotFoundException e) {
            System.out.println("Can't read this file");
            e.printStackTrace();
@@ -110,6 +122,11 @@ public class Graph_Panel extends JPanel {
             adjacency = new   ArrayList<ArrayList<Boolean>>(json.fromJson(impAdj,AdjType)); 
         }
    
+        
+        
+        
+        
+        //************SHOW SO DINH, CANH TRONG CONNECTIVITY*********///
         public int showEdge(){
             return edgeList.size();
         }
@@ -117,7 +134,11 @@ public class Graph_Panel extends JPanel {
             return nodeList.size();
         }
         
-
+        
+        
+        
+        
+        //*************MA TRAN DINH DINH****************//
         public static int[][] graphSolve;
         
 	public void printAdjacency() {            
@@ -131,12 +152,7 @@ public class Graph_Panel extends JPanel {
                                 graphSolve[i][j]=temp;
 			}
 		} 
-                
-                
-                
 	}
-        
-
 	
 	public void addNode(int newX, int newY, String newLabel) {
 		nodeList.add(new Node(newX, newY, newLabel));

@@ -67,24 +67,10 @@ public class DrawingFrame implements ActionListener, MouseListener {
         frame.repaint();
     }
 
-//        public void importF()throws FileNotFoundException {
-//            File f = new File("ex.txt");
-//            Scanner sc= new Scanner(f);
-//            while(){
-//                System.out.println(sc.nextLine());
-//            }
-//            
-//        } 
-//        public void exportF() throws IOException {
-//            String fileContent = "";
-//            File f = new File("ex.txt");
-//            while(){
-//                FileWriter wt = new FileWriter("C:\\Users\\nguye\\Documents\\NetBeansProjects\\NiennnnnLuannnnnnnnnnnn\\new.txt");
-//                wt.write(fileContent);
-//                wt.close();
-//            }
-//            
-//        }
+
+
+
+
     public static void findGraph() {
         int[][] temp = new int[graphSolve.length][graphSolve.length];
         Hamilton_Althorithm hc = new Hamilton_Althorithm();
