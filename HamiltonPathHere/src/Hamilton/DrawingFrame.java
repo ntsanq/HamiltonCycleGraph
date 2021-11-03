@@ -11,7 +11,6 @@ import static Hamilton.Graph_Panel.graphSolve;
 import static Hamilton.MainFrame.state;
 import javax.swing.BorderFactory;
 
-
 public class DrawingFrame implements ActionListener, MouseListener {
 
     public static JFrame frame = new JFrame();
@@ -53,7 +52,6 @@ public class DrawingFrame implements ActionListener, MouseListener {
     //reset tat ca cac dinh tren panel
     public void reset() {
         panel.resetNode();
-        
         frame.repaint();
         count = 0;
     }
@@ -67,7 +65,6 @@ public class DrawingFrame implements ActionListener, MouseListener {
     public void importGraph(){
         panel.importGraphPanel();
         frame.repaint();
-        count = panel.Vcount;
     }
 
 

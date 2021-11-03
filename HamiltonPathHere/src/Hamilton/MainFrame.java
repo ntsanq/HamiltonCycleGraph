@@ -339,8 +339,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
         popFrame.reset();
-        connectString ="";
-        cntvtyField.setText(connectString);
     }//GEN-LAST:event_resetBtnActionPerformed
 
     private void addVerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVerBtnActionPerformed
