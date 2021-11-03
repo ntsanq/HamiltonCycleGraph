@@ -53,6 +53,7 @@ public class Graph_Panel extends JPanel {
         public String expNode;
         public  String expEdge;
         public String expAdj;
+        public static int Vcount;
         
         public void exportGraphPanel()   {
             Gson json = new  Gson();
@@ -60,8 +61,9 @@ public class Graph_Panel extends JPanel {
             expNode = json.toJson(nodeList); // xuat ra txt
             expEdge = json.toJson(edgeList); // xuat ra txt
             expAdj = json.toJson(adjacency); // xuat ra txt
+            Vcount = nodeList.size();
             
-            String content = (expNode+"\n"+expEdge+"\n"+expAdj+"\n");
+            String content = (expNode+"\n"+expEdge+"\n"+expAdj+"\n"+Vcount);
             BufferedWriter wt;   
             //*******EXPORT FILE*************//
             try {
@@ -73,8 +75,15 @@ public class Graph_Panel extends JPanel {
                     wt = new BufferedWriter(new FileWriter(exPath));
                     wt.write(content);
                     wt.close();
-                    System.out.println(expNode+"\n"+expEdge+"\n"+expAdj+"\n");
+                    System.out.println(expNode+"\n"+expEdge+"\n"+expAdj+"\n"+Vcount);
+                    
+                    System.out.println(Vcount);
+                    
                     resetNode();
+                    
+                    
+                    //
+                    
                 }else {
                  throw new NullPointerException("demo");
                 }
@@ -102,7 +111,11 @@ public class Graph_Panel extends JPanel {
                      impNode = sc.nextLine();
                      impEdge = sc.nextLine();
                      impAdj = sc.nextLine();
+                     Vcount = sc.nextInt();
                      sc.close();
+                     System.out.println("");
+                     
+                     
                 }else {
                  throw new NullPointerException("demo");
                 }
