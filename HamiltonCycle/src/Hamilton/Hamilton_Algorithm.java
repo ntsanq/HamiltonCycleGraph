@@ -1,19 +1,17 @@
 package Hamilton;
+import static Hamilton.Graph_Panel.redline_array;
 import java.util.Arrays;
 import static Hamilton.MainFrame.final_path;
-//import static Hamilton.MainFrame.VNumber;
-public class Hamilton_Althorithm
+public class Hamilton_Algorithm
 {
     private int V, pathCount;
     private int[] path;     
     private int[][] graph;
     
-    Hamilton_Althorithm(){
-    
+    Hamilton_Algorithm(){
     }
     
- 
-    /** Function to find cycle **/
+     //**tim chu trình**//
     public void findHamiltonianCycle(int[][] g)
     {
         V = g.length;
@@ -27,23 +25,21 @@ public class Hamilton_Althorithm
             path[0] = 0;
             pathCount = 1;            
             solve(0);
-            System.out.println("No path");
+            System.out.println("\nNo path");
             final_path += "Can't find Hamilton cycle in this graph";
-            
-            //number of vertex
-//            String s =Integer.toString(V);
-//            VNumber = s;
+
         }
         catch (Exception e)
         {
             display();
         }
     }
-    /** function to find paths recursively **/
-    public void solve(int vertex) throws Exception
+    
+    // **đệ quy**// 
+    public void solve(int node) throws Exception
     {
-        /** solution **/
-        if (graph[vertex][0] == 1 && pathCount == V)
+        //kết quả
+        if (graph[node][0] == 1 && pathCount == V)
             throw new Exception("\nKet qua duong di Hamilton la:");
         /** all vertices selected but last vertex not linked to 0 **/
         
@@ -52,28 +48,29 @@ public class Hamilton_Althorithm
  
         for (int v = 0; v < V; v++)
         {
-            /** if connected **/
-            if (graph[vertex][v] == 1 )
+            //nếu connected
+            if (graph[node][v] == 1 )
             {
-                /** add to path **/            
+                //thì add vô path           
                 path[pathCount++] = v;    
-                /** remove connection **/            
-                graph[vertex][v] = 0;
-                graph[v][vertex] = 0;
+                //bỏ connection           
+                graph[node][v] = 0;
+                graph[v][node] = 0;
  
-                /** if vertex not already selected  solve recursively **/
+                //nếu đỉnh chưa được đi qua
                 if (!isPresent(v))
                     solve(v);
  
-                /** restore connection **/
-                graph[vertex][v] = 1;
-                graph[v][vertex] = 1;
-                /** remove path **/
+                // restore lại connection
+                graph[node][v] = 1;
+                graph[v][node] = 1;
+                // bỏ path
                 path[--pathCount] = -1;                    
             }
         }
     }    
-    /** function to check if path is already selected **/
+    
+    //check xem path có được đi qua chưa
     public boolean isPresent(int v)
     {
         for (int i = 0; i < pathCount - 1; i++)
@@ -81,13 +78,18 @@ public class Hamilton_Althorithm
                 return true;
         return false;                
     }
-    /** display solution **/
+    
+    // display ra màn hình kết quả
     public void display()
     {
-        System.out.print("Path : ");
+        System.out.println("\nChu trình : ");
+        
+        redline_array = new int[V+1];
+        
         for (int i = 0; i <= V; i++){
            System.out.print(path[i % V]+1 +"  ");
-           final_path+= path[i % V]+1 + "  ";
+           final_path+= path[i % V]+1 + " ";
+           redline_array[i] =  path[i % V]+1;
         }
         
     }    

@@ -24,15 +24,21 @@ public class Graph_Panel extends JPanel {
 	ArrayList<ArrayList<Boolean>> adjacency = new ArrayList<ArrayList<Boolean>>();
         int circleRadius =20;
         
+        public String expNode;
+        public  String expEdge;
+        public String expAdj;
+        public static int Vcount;
+        String impNode;
+        String impEdge;
+        String impAdj;
         
 	public Graph_Panel() {
 		super();
 	}
 	
         
-        
 	public ArrayList<String> getConnected(String label) {
-		ArrayList<String> toReturn = new ArrayList<String>();
+                ArrayList<String> toReturn = new ArrayList<String>();
 		int j = getIndex(label);
 		for (int i = 0; i < adjacency.size(); i++) {
 			if (adjacency.get(j).get(i) && !nodeList.get(i).getLabel().equals(label)) {
@@ -42,118 +48,10 @@ public class Graph_Panel extends JPanel {
 		return toReturn;
 	}
         
-        //********HAM***************************************************************************************//
-        public void resetNode(){
-            nodeList = new ArrayList<Node>();
-            edgeList = new ArrayList<Edge>();
-            adjacency = new ArrayList<ArrayList<Boolean>>();
-        }
-        
-        
-        public String expNode;
-        public  String expEdge;
-        public String expAdj;
-        
-        public void exportGraphPanel()   {
-            Gson json = new  Gson();
-                        
-            expNode = json.toJson(nodeList); // xuat ra txt
-            expEdge = json.toJson(edgeList); // xuat ra txt
-            expAdj = json.toJson(adjacency); // xuat ra txt
-            
-            String content = (expNode+"\n"+expEdge+"\n"+expAdj+"\n");
-            BufferedWriter wt;   
-            //*******EXPORT FILE*************//
-            try {
-                
-                 JFileChooser filechooser =new JFileChooser();
-                int response =filechooser.showSaveDialog(null);//chon file save
-                if(response == JFileChooser.APPROVE_OPTION){
-                    File exPath =new File(filechooser.getSelectedFile().getAbsolutePath());
-                    wt = new BufferedWriter(new FileWriter(exPath));
-                    wt.write(content);
-                    wt.close();
-                    System.out.println(expNode+"\n"+expEdge+"\n"+expAdj+"\n");
-                    resetNode();
-                }else {
-                 throw new NullPointerException("demo");
-                }
-            
-            } catch (IOException ex) {
-                Logger.getLogger(Graph_Panel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            
-        }
-        
-        String impNode;
-        String impEdge;
-        String impAdj;
-        public void importGraphPanel(){
-           Gson json = new  Gson();
-           
-           //*******DOC FILE*************//
-           try {
-                JFileChooser filechooser =new JFileChooser();
-                int response =filechooser.showOpenDialog(null);//chon file
-                if(response == JFileChooser.APPROVE_OPTION){
-                    File imPath =new File(filechooser.getSelectedFile().getAbsolutePath());                    
-                    Scanner sc = new Scanner(imPath);
-                     impNode = sc.nextLine();
-                     impEdge = sc.nextLine();
-                     impAdj = sc.nextLine();
-                     sc.close();
-                }else {
-                 throw new NullPointerException("demo");
-                }
-                
-                
-          }catch (FileNotFoundException e) {
-           System.out.println("Can't read this file");
-           e.printStackTrace();
-          }
-            
-            System.out.println(impNode+"\n"+impEdge+"\n"+impAdj+"\n");
-            Type NodeType = new TypeToken<ArrayList<Node>>(){}.getType();
-            Type EdgeType = new TypeToken<ArrayList<Edge>>(){}.getType();
-            Type AdjType = new TypeToken<ArrayList<ArrayList<Boolean>>>(){}.getType();
-            nodeList = new  ArrayList<Node>(json.fromJson(impNode,NodeType)); 
-            edgeList = new  ArrayList<Edge>(json.fromJson(impEdge,EdgeType)); 
-            adjacency = new   ArrayList<ArrayList<Boolean>>(json.fromJson(impAdj,AdjType)); 
-        }
-   
         
         
         
         
-        //************SHOW SO DINH, CANH TRONG CONNECTIVITY*********///
-        public int showEdge(){
-            return edgeList.size();
-        }
-	public int showNode(){
-            return nodeList.size();
-        }
-        
-        
-        
-        
-        
-        //*************MA TRAN DINH DINH****************//
-        public static int[][] graphSolve;
-        
-	public void printAdjacency() {            
-                graphSolve = new int[adjacency.size()][adjacency.size()];
-		for (int i = 0; i < adjacency.size(); i++) {
-			for (int j = 0; j < adjacency.size(); j++) {
-                                int temp = 0;
-                                if(adjacency.get(i).get(j)){
-                                    temp=1;
-                                }
-                                graphSolve[i][j]=temp;
-			}
-		} 
-	}
-	
 	public void addNode(int newX, int newY, String newLabel) {
 		nodeList.add(new Node(newX, newY, newLabel));
 		adjacency.add(new ArrayList<Boolean>());
@@ -198,6 +96,8 @@ public class Graph_Panel extends JPanel {
 		return -1;
 	}
 	
+        
+               
 	public void addEdge(Node first, Node second, String newLabel) {
 		edgeList.add(new Edge(first, second, newLabel));
 		int firstIndex = 0;
@@ -215,21 +115,161 @@ public class Graph_Panel extends JPanel {
 		
 		printAdjacency();
 	}
+        
 	
+        
+        public void resetNode(){
+            nodeList = new ArrayList<Node>();
+            edgeList = new ArrayList<Edge>();
+            adjacency = new ArrayList<ArrayList<Boolean>>();
+            try{
+                graphMatrix = null;
+                redline_array = null; // reset red line
+            }
+            catch(Exception e){
+                
+            }
+        }
+
+        
+        public void refresh(){//refresh after red linning
+            redline_array = null;
+        }
+        
+        public void exportGraphPanel()   {
+            Gson json = new  Gson();
+            expNode = json.toJson(nodeList); // xuat ra txt
+            expEdge = json.toJson(edgeList); // xuat ra txt
+            expAdj = json.toJson(adjacency); // xuat ra txt
+            Vcount = nodeList.size();
+            
+            String content = (expNode+"\n"+expEdge+"\n"+expAdj+"\n"+Vcount);
+            BufferedWriter wt;   
+            try {
+                
+                 JFileChooser filechooser =new JFileChooser();
+                int response =filechooser.showSaveDialog(null);//chon file save
+                if(response == JFileChooser.APPROVE_OPTION){
+                    File exPath =new File(filechooser.getSelectedFile().getAbsolutePath());
+                    wt = new BufferedWriter(new FileWriter(exPath));
+                    wt.write(content);
+                    wt.close();
+                    resetNode();
+                }else {
+                 throw new NullPointerException("error to export");
+                }
+            
+            } catch (IOException ex) {
+                Logger.getLogger(Graph_Panel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        public void importGraphPanel(){
+           Gson json = new  Gson();
+           //*******DOC FILE*************//
+           try {
+                JFileChooser filechooser =new JFileChooser();
+                int response =filechooser.showOpenDialog(null);//chon file
+                if(response == JFileChooser.APPROVE_OPTION){
+                    File imPath =new File(filechooser.getSelectedFile().getAbsolutePath());                    
+                    Scanner sc = new Scanner(imPath);
+                     impNode = sc.nextLine();
+                     impEdge = sc.nextLine();
+                     impAdj = sc.nextLine();
+                     Vcount = sc.nextInt();
+                     sc.close();
+                }else {
+                 throw new NullPointerException("error to import");
+                }
+          }catch (FileNotFoundException e) {
+           System.out.println("Can't read this file");
+           e.printStackTrace();
+          }
+           
+           //Set lai cac danh sach
+            System.out.println("\nĐã import vào: \n");
+            System.out.println(impNode+"\n"+impEdge+"\n"+impAdj+"\n");
+            Type NodeType = new TypeToken<ArrayList<Node>>(){}.getType();
+            Type EdgeType = new TypeToken<ArrayList<Edge>>(){}.getType();
+            Type AdjType = new TypeToken<ArrayList<ArrayList<Boolean>>>(){}.getType();
+            nodeList = new  ArrayList<Node>(json.fromJson(impNode,NodeType)); 
+            edgeList = new  ArrayList<Edge>(json.fromJson(impEdge,EdgeType)); 
+            adjacency = new   ArrayList<ArrayList<Boolean>>(json.fromJson(impAdj,AdjType)); 
+        }
+        
+        //************SHOW SO DINH, CANH TRONG CONNECTIVITY*********///
+        public int showEdge(){
+            return edgeList.size();
+        }
+	public int showNode(){
+            return nodeList.size();
+        }
+        
+        //*************MA TRAN DINH DINH****************//
+        public static int[][] graphMatrix;
+        
+	public void printAdjacency() {            
+                graphMatrix = new int[adjacency.size()][adjacency.size()];
+		for (int i = 0; i < adjacency.size(); i++) {
+			for (int j = 0; j < adjacency.size(); j++) {
+                                int temp = 0;
+                                if(adjacency.get(i).get(j)){
+                                    temp=1;
+                                }
+                                graphMatrix[i][j]=temp;
+			}
+		} 
+	}
+	
+        
+        
+        public static int[] redline_array;
+        public boolean redLine(int x, int y){
+            try{
+                for(int i=0;i<redline_array.length-1;i++){
+//                    System.out.println(array_result[i]+ " " +array_result[i+1]);
+                    if((x== redline_array[i]) && (y == redline_array[i+1]) || (x== redline_array[i+1]) && (y == redline_array[i])){
+                        return true;
+                    }
+                }
+            }
+            catch(Exception e){
+            }
+            return false;
+        }
+        
+        
+        
+        
+        
+        
+        
+        
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-                
+                        
+
 		for (int i = 0; i < edgeList.size(); i++) {
-			g.setColor(Color.BLACK);
+                        int x = Integer.parseInt(edgeList.get(i).getFirst().label);
+                        int y = Integer.parseInt(edgeList.get(i).getSecond().label);
+                        
+                        if(redLine(x,y))      // path red
+                           g.setColor(Color.RED); 
+                        else
+                            g.setColor(Color.BLACK);
+                       
+                        
 			g.drawLine(edgeList.get(i).getFirst().getX(), edgeList.get(i).getFirst().getY(), edgeList.get(i).getSecond().getX(), edgeList.get(i).getSecond().getY());
-			int x1 = edgeList.get(i).getFirst().getX();
+			
+                        int x1 = edgeList.get(i).getFirst().getX();
 			int y1 = edgeList.get(i).getFirst().getY();
 			int x2 = edgeList.get(i).getSecond().getX();
 			int y2 = edgeList.get(i).getSecond().getY();
-			
-			g.drawString(edgeList.get(i).getLabel(),
-						 Math.min(x1, x2) + Math.abs(x2 - x1) / 2,
-						 Math.min(y1, y2) + Math.abs(y2 - y1) / 2);
+                        
+                        g.drawString(edgeList.get(i).getLabel(),
+                                Math.min(x1, x2) + Math.abs(x2 - x1) / 2,
+                                Math.min(y1, y2) + Math.abs(y2 - y1) / 2);
+                              
 		}
                 
 		for (int i = 0; i < nodeList.size(); i++) {
@@ -244,7 +284,7 @@ public class Graph_Panel extends JPanel {
 				g.setColor(Color.BLACK);
 			}
                         // ve vong tron
-			g.drawOval(nodeList.get(i).getX() - circleRadius, nodeList.get(i).getY() - circleRadius, circleRadius*2, circleRadius*2);
+	 		g.drawOval(nodeList.get(i).getX() - circleRadius, nodeList.get(i).getY() - circleRadius, circleRadius*2, circleRadius*2);
                         //can chinh So trong vong tron
 			g.drawString(nodeList.get(i).getLabel(), nodeList.get(i).getX() - (g.getFontMetrics().stringWidth(nodeList.get(i).getLabel()) / 2), nodeList.get(i).getY() + (g.getFontMetrics().getHeight() / 4));
 		}
@@ -257,14 +297,7 @@ public class Graph_Panel extends JPanel {
 		}
 	}
         
-//        public void pathDisplay(Graphics h) {
-//        
-//		for (int i = 0; i < edgeList.size(); i++) {
-//			h.setColor(Color.BLACK);
-//			h.drawLine(edgeList.get(i).getFirst().getX(), edgeList.get(i).getFirst().getY(), edgeList.get(i).getSecond().getX(), edgeList.get(i).getSecond().getY());
-//		}
-//	}
-        
+       
 
 }
 

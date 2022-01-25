@@ -6,13 +6,11 @@ public class Edge {
 	Node first;
 	Node second;
 	String label;
-	boolean highlighted;
 
 	public Edge(Node newFirst, Node newSecond, String newLabel) {
 		first = newFirst;
 		second = newSecond;
 		label = newLabel;
-//                highlighted = false;
 	}
 	
 	public Node getOtherEnd(Node n) {
@@ -46,9 +44,6 @@ public class Edge {
 		this.label = label;
 	}
         
-//	public void setHighlighted(boolean highlighted) {
-//		this.highlighted = highlighted;
-//	}
-	
+
 	
 }

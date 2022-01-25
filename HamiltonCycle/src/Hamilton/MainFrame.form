@@ -54,7 +54,7 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="157" max="-2" attributes="0"/>
-                      <Component id="bigTiltle" min="-2" pref="253" max="-2" attributes="0"/>
+                      <Component id="bigTiltle" min="-2" pref="264" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -104,10 +104,9 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="openBtn" alignment="0" min="-2" pref="462" max="-2" attributes="0"/>
-                      <Component id="controlLabel" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="addVerBtn" min="-2" pref="142" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -115,6 +114,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="resetBtn" min="-2" pref="142" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="controlLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -163,7 +163,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="addVerBtn">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Add vertex"/>
+            <Property name="text" type="java.lang.String" value="Add node"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addVerBtnActionPerformed"/>
@@ -232,7 +232,7 @@
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="edgeNumField" alignment="0" pref="240" max="32767" attributes="0"/>
                               <Component id="vNumField" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jScrollPane1" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -262,9 +262,9 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="cntComponentLbl" min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="71" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="79" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="25" max="32767" attributes="0"/>
+                  <EmptySpace pref="17" max="32767" attributes="0"/>
                   <Component id="checkBtn" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
               </Group>
@@ -320,11 +320,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="cntvtyField">
-              <Properties>
-                <Property name="columns" type="int" value="20"/>
-                <Property name="rows" type="int" value="5"/>
-              </Properties>
+            <Component class="javax.swing.JTextPane" name="cntField">
             </Component>
           </SubComponents>
         </Container>
@@ -379,7 +375,7 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="findPATHBtn">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Click to find path"/>
+            <Property name="text" type="java.lang.String" value="Click to find cycle"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="findPATHBtnActionPerformed"/>
@@ -405,7 +401,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="UTM Rockwell" size="26" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Hamilton Path"/>
+        <Property name="text" type="java.lang.String" value="Hamilton Cycle"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="imBtn">

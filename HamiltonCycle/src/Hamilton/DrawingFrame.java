@@ -7,76 +7,78 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
-import static Hamilton.Graph_Panel.graphSolve;
+import static Hamilton.Graph_Panel.graphMatrix;
 import static Hamilton.MainFrame.state;
 import javax.swing.BorderFactory;
+
 
 public class DrawingFrame implements ActionListener, MouseListener {
 
     public static JFrame frame = new JFrame();
-    Graph_Panel panel = new Graph_Panel();
+    Graph_Panel G_panel = new Graph_Panel();
     final int NODE_CREATE = 0;
     final int EDGE_FIRST = 1;
     final int EDGE_SECOND = 2;
-
+    final int NODE_REMOVE = 3;
+    
     Node first = null;
-    ArrayList<Node> hamilPath = new ArrayList<Node>();
+    ArrayList<Node> node = new ArrayList<Node>();
 
-    String hamilPathString = "";
 
     public DrawingFrame() {
-        
         //custom drawning frame
         frame.setSize(796, 723);
         frame.setResizable(false);
         frame.setLocation(570, 0);
 
         frame.setLayout(new BorderLayout());
-        frame.add(panel);
-        panel.setBorder(BorderFactory.createTitledBorder("Drawing panel 🖊"));
+        frame.add(G_panel);
+        G_panel.setBorder(BorderFactory.createTitledBorder("Drawing panel 🖊"));
         frame.setVisible(true);
         frame.setTitle("B1805911");
-        panel.addMouseListener(this);
+        G_panel.addMouseListener(this);
 
     }
     
     //layy gia tri canh
     public int showEdge() {
-        return panel.showEdge();
+        return G_panel.showEdge();
     }
     //lay gia tri dinh
     public int showNode() {
-        return panel.showNode();
+        return G_panel.showNode();
     }
     
     //reset tat ca cac dinh tren panel
     public void reset() {
-        panel.resetNode();
+        G_panel.resetNode();
+        
         frame.repaint();
         count = 0;
     }
     
     //ham export
     public void exportGraph(){
-        panel.exportGraphPanel();
+        G_panel.exportGraphPanel();
         frame.repaint();
+        count=0;
     }
     //ham import
     public void importGraph(){
-        panel.importGraphPanel();
+        G_panel.resetNode();
+        G_panel.importGraphPanel();
         frame.repaint();
+        count = G_panel.Vcount;
+        G_panel.printAdjacency();
     }
 
 
-
-
-
-    public static void findGraph() {
-        int[][] temp = new int[graphSolve.length][graphSolve.length];
-        Hamilton_Althorithm hc = new Hamilton_Althorithm();
-        for (int i = 0; i < graphSolve.length; i++) {
-            for (int j = 0; j < graphSolve.length; j++) {
-                temp[i][j] = graphSolve[i][j];
+    public static void findHamiltonCycle() {
+        int[][] temp = new int[graphMatrix.length][graphMatrix.length];
+        Hamilton_Algorithm hc = new Hamilton_Algorithm();
+        for (int i = 0; i < graphMatrix.length; i++) {
+            for (int j = 0; j < graphMatrix.length; j++) {
+                temp[i][j] = graphMatrix[i][j];
             }
         }
         hc.findHamiltonianCycle(temp);
@@ -84,21 +86,64 @@ public class DrawingFrame implements ActionListener, MouseListener {
 
         
     public static void checkConnectivity() {
-        Connectivity graphConnected = new Connectivity(graphSolve.length+1);
+        Connectivity cnComponents = new Connectivity(graphMatrix.length+1);
         
-        int[][] temp = new int[graphSolve.length][graphSolve.length];
-        for (int i = 0; i < graphSolve.length; i++) {
-            for (int j = 0; j < graphSolve.length; j++) {
-                temp[i][j] = graphSolve[i][j];
-//                System.out.print(temp[i][j] + " ");
+        int[][] temp = new int[graphMatrix.length][graphMatrix.length];
+        for (int i = 0; i < graphMatrix.length; i++) {
+            for (int j = 0; j < graphMatrix.length; j++) {
+                temp[i][j] = graphMatrix[i][j];
                 if(temp[i][j]==1){
-                    System.out.println((i+1)+" "+(j+1));
-                    graphConnected.addEdge(i+1,j+1);
+                    cnComponents.addEdge(i+1,j+1);
                 }
             }
         }
-        System.out.println("Following are connected components");
-        graphConnected.connectedComponents();
+        System.out.println("\nMiền liên thông: \n");
+        cnComponents.connectedComponents();
+    }
+    
+    
+    public void refreshRedline(){
+        G_panel.refresh();
+    }
+    
+    public void reDraw(){
+        frame.repaint();
+    }
+
+
+    public int count = 0;
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        if (state == NODE_CREATE) {
+            count++;
+            G_panel.addNode(e.getX(), e.getY(), String.valueOf(count));
+        } else if (state == EDGE_FIRST) {
+            Node n = G_panel.getNode(e.getX(), e.getY());
+            if (n != null) {
+                first = n;
+                state = EDGE_SECOND;
+                n.setHighlighted(true);
+            }
+        } else if (state == EDGE_SECOND) {
+            Node n = G_panel.getNode(e.getX(), e.getY());
+            if (n != null && !first.equals(n)) {
+                String s = String.valueOf(count);
+
+                first.setHighlighted(false);
+                G_panel.addEdge(first, n, ""); // trong so cua canh
+                first = null;
+                state = EDGE_FIRST;
+
+            }
+        }
+//        else if (state == NODE_REMOVE){
+//            Node n = G_panel.getNode(e.getX(), e.getY());
+////            System.out.println("remove check!");
+//            G_panel.removeNode(e.getX(), e.getY());
+//            frame.repaint();
+//        }
+        frame.repaint();
     }
 
     @Override
@@ -119,41 +164,6 @@ public class DrawingFrame implements ActionListener, MouseListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    }
-
-    public int count = 0;
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        if (state == NODE_CREATE) {
-            count++;
-            panel.addNode(e.getX(), e.getY(), String.valueOf(count));
-        } else if (state == EDGE_FIRST) {
-            Node n = panel.getNode(e.getX(), e.getY());
-            if (n != null) {
-                first = n;
-                state = EDGE_SECOND;
-                n.setHighlighted(true);
-            }
-        } else if (state == EDGE_SECOND) {
-            Node n = panel.getNode(e.getX(), e.getY());
-            if (n != null && !first.equals(n)) {
-                String s = String.valueOf(count);
-
-                first.setHighlighted(false);
-                panel.addEdge(first, n, "");
-                first = null;
-                state = EDGE_FIRST;
-
-            }
-        }
-        frame.repaint();
-    }
-
-    public void travelling(Node n, ArrayList<Node> path) {
-        for (int i = 0; i < path.size(); i++) {
-            hamilPath.add(path.get(i));
-        }
     }
 
 }

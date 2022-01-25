@@ -3,7 +3,7 @@ package Hamilton;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import static Hamilton.Connectivity.connectString;
+import static Hamilton.Connectivity.connectivityString;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -36,7 +36,7 @@ public class MainFrame extends javax.swing.JFrame {
         vNumField = new javax.swing.JTextField();
         cntComponentLbl = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        cntvtyField = new javax.swing.JTextArea();
+        cntField = new javax.swing.JTextPane();
         Result = new javax.swing.JPanel();
         findPATHBtn = new javax.swing.JButton();
         pathField = new javax.swing.JTextField();
@@ -70,7 +70,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        addVerBtn.setText("Add vertex");
+        addVerBtn.setText("Add node");
         addVerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addVerBtnActionPerformed(evt);
@@ -94,16 +94,16 @@ public class MainFrame extends javax.swing.JFrame {
         controlModeLayout.setHorizontalGroup(
             controlModeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlModeLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(23, 23, 23)
                 .addGroup(controlModeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(openBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(controlLabel)
                     .addGroup(controlModeLayout.createSequentialGroup()
                         .addComponent(addVerBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(addEdBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(resetBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(resetBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(controlLabel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         controlModeLayout.setVerticalGroup(
@@ -143,9 +143,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         cntComponentLbl.setText("Connected components :");
 
-        cntvtyField.setColumns(20);
-        cntvtyField.setRows(5);
-        jScrollPane1.setViewportView(cntvtyField);
+        jScrollPane1.setViewportView(cntField);
 
         javax.swing.GroupLayout connectivityCheckLayout = new javax.swing.GroupLayout(connectivityCheck);
         connectivityCheck.setLayout(connectivityCheckLayout);
@@ -193,15 +191,15 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(connectivityCheckLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cntComponentLbl)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addComponent(checkBtn)
                 .addContainerGap())
         );
 
         Result.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153), 3));
 
-        findPATHBtn.setText("Click to find path");
+        findPATHBtn.setText("Click to find cycle");
         findPATHBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 findPATHBtnActionPerformed(evt);
@@ -242,7 +240,7 @@ public class MainFrame extends javax.swing.JFrame {
         );
 
         bigTiltle.setFont(new java.awt.Font("UTM Rockwell", 1, 26)); // NOI18N
-        bigTiltle.setText("Hamilton Path");
+        bigTiltle.setText("Hamilton Cycle");
 
         imBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -302,7 +300,7 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addComponent(Result, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(157, 157, 157)
-                        .addComponent(bigTiltle, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(bigTiltle, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -332,50 +330,59 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void findPATHBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findPATHBtnActionPerformed
         final_path = "";
-        popFrame.findGraph();
-        pathField.setText("The path is: " + final_path);
-
+        popFrame.findHamiltonCycle();
+        pathField.setText("The cycle is: " + final_path);
+        popFrame.reDraw();
     }//GEN-LAST:event_findPATHBtnActionPerformed
 
     private void resetBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetBtnActionPerformed
         popFrame.reset();
+        cntField.setText("");
+        vNumField.setText("");
+        edgeNumField.setText("");
+        pathField.setText("");
+        
     }//GEN-LAST:event_resetBtnActionPerformed
 
     private void addVerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVerBtnActionPerformed
         state = NODE_CREATE;
+        popFrame.refreshRedline();
     }//GEN-LAST:event_addVerBtnActionPerformed
 
     private void addEdBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEdBtnActionPerformed
         state = EDGE_FIRST;
+        popFrame.refreshRedline();
     }//GEN-LAST:event_addEdBtnActionPerformed
 
     private void exBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exBtnActionPerformed
         //export
         popFrame.exportGraph();
+        cntField.setText("");
+        vNumField.setText("");
+        edgeNumField.setText("");
+        pathField.setText("");
         
-//         JOptionPane.showMessageDialog(null,"Funtion not available.","Alert",JOptionPane.WARNING_MESSAGE);
-
     }//GEN-LAST:event_exBtnActionPerformed
 
     private void imBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imBtnActionPerformed
         //import
         popFrame.importGraph();
+        
     }//GEN-LAST:event_imBtnActionPerformed
 
     public static String connectivityResult;
 
     private void checkBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBtnActionPerformed
 
-        popFrame.findGraph();
         String v = Integer.toString(popFrame.showNode());
         vNumField.setText("There are " + v + " vertexes");
 
         String e = Integer.toString(popFrame.showEdge());
         edgeNumField.setText("There are " + e + " edges");
-
+        
 //       check connectiviry
         popFrame.checkConnectivity();
-        cntvtyField.setText(connectString);
+        cntField.setText(connectivityString);
 
 
     }//GEN-LAST:event_checkBtnActionPerformed
@@ -389,7 +396,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_questionLblMouseClicked
 
     private void ownerLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ownerLblMouseClicked
-        JOptionPane.showMessageDialog(null, "Nguyen Thanh Sang\nB1805911\nCan Tho University", "Owner", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Nguyen Thanh Sang\nB1805911\nCan Tho University", "Author", JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_ownerLblMouseClicked
 
     private void imBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imBtnMouseClicked
@@ -407,6 +414,7 @@ public class MainFrame extends javax.swing.JFrame {
     final int NODE_CREATE = 0;
     final int EDGE_FIRST = 1;
     final int EDGE_SECOND = 2;
+//    final int REMOVE_NODE = 3;
     public static String final_path;
     public static String VNumber;
 
@@ -435,7 +443,6 @@ public class MainFrame extends javax.swing.JFrame {
                 MainFrame m = new MainFrame();
                 m.setVisible(true);
                 m.setTitle("NguyenThanhSang");
-//                popFrame = new DrawingFrame();
             }
         });
     }
@@ -448,7 +455,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton checkBtn;
     private javax.swing.JLabel cncLabel;
     private javax.swing.JLabel cntComponentLbl;
-    private javax.swing.JTextArea cntvtyField;
+    private javax.swing.JTextPane cntField;
     private javax.swing.JPanel connectivityCheck;
     private javax.swing.JLabel controlLabel;
     private javax.swing.JPanel controlMode;
